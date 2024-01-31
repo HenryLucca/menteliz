@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 
+import AuthContextProvider from "@/contexts/AuthContext";
+
 import { cn } from "@/lib/utils";
 
 export const fontSans = FontSans({
@@ -27,7 +29,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );
