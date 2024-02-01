@@ -101,7 +101,7 @@ export default function AuthProvider({
 
   useEffect(() => {
     configSession();
-  }, [user]);
+  }, []);
 
   return (
     <AuthContext.Provider
