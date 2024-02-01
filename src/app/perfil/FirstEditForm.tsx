@@ -22,7 +22,7 @@ const FormSchema = z.object({
   type: z.enum(["patients", "family_members", "doctors"], {
     required_error: "Selecione o seu tipo de usuário.",
   }),
-  userName: z.string().nonempty({
+  username: z.string().min(0, {
     message: "Por favor, insira seu nome.",
   }),
 });
@@ -32,12 +32,15 @@ export default function FirstEditForm() {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      type: undefined,
+      username: "",
+    },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     if (createUser) {
-      createUser(data.type, data.userName);
+      createUser(data.type, data.username);
     }
   }
 
@@ -85,13 +88,13 @@ export default function FirstEditForm() {
 
         <FormField
           control={form.control}
-          name="userName"
+          name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="md:text-xl">Nome</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="seu@email.com"
+                  placeholder="Seu Nome"
                   {...field}
                   className="md:text-xl"
                 />
@@ -103,23 +106,6 @@ export default function FirstEditForm() {
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name="userName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome</FormLabel>
-              <FormControl>
-                <input
-                  type="text"
-                  {...field}
-                  className="w-full p-2 border rounded-md"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <Button type="submit">Salvar</Button>
       </form>
     </Form>
