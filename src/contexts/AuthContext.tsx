@@ -40,15 +40,13 @@ export default function AuthProvider({
   const configSession = async () => {
     const session = await supabase.auth.getSession();
 
-    if (session) {
-      const user = session?.data.session?.user;
-      // const userData: User = {
-      //   id: user?.id,
-      //   email: user?.email,
-      // };
-      const userData = await createCommonUser(user?.id, user?.email);
-      setUser(userData);
-    }
+    const user = session?.data.session?.user;
+    // const userData: User = {
+    //   id: user?.id,
+    //   email: user?.email,
+    // };
+    const userData = await createCommonUser(user?.id, user?.email);
+    setUser(userData);
 
     setLoading(false);
   };
@@ -94,8 +92,8 @@ export default function AuthProvider({
     try {
       setLoading(true);
       const { error } = await supabase.auth.signOut();
-      configSession();
       setUser(undefined);
+      setLoading(false);
 
       if (error) throw error;
 
