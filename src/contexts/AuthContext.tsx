@@ -4,6 +4,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { CommonUser as User, createCommonUser } from "@/models/User";
 
 interface AuthContextProps {
   user?: any;
@@ -32,7 +33,7 @@ export default function AuthProvider({
   children: React.ReactNode;
 }) {
   const route = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
 
@@ -41,7 +42,12 @@ export default function AuthProvider({
 
     if (session) {
       const user = session?.data.session?.user;
-      setUser(user);
+      // const userData: User = {
+      //   id: user?.id,
+      //   email: user?.email,
+      // };
+      const userData = await createCommonUser(user?.id, user?.email);
+      setUser(userData);
     }
 
     setLoading(false);
@@ -89,7 +95,7 @@ export default function AuthProvider({
       setLoading(true);
       const { error } = await supabase.auth.signOut();
       configSession();
-      setUser(null);
+      setUser(undefined);
 
       if (error) throw error;
 
