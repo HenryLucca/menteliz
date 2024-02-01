@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAuthContext } from "@/contexts/AuthContext";
+import Header from "@/components/Header/Header";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -49,12 +50,10 @@ export default function Login() {
   }
   return (
     <>
-      <header className="flex justify-center items-center h-16 bg-zinc-200">
-        <h1 className="text-2xl font-bold text-white">header</h1>
-      </header>
+      <Header />
 
-      <main className="min-h-[80svh]">
-        <div className="flex flex-col justify-center items-center py-12 px-24">
+      <main className="min-h-[80svh] bg-mBlue-200">
+        <div className="flex flex-col justify-center items-center py-12 px-1 md:px-24">
           <div className="flex flex-col self-start">
             <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100">
               Faça login em sua conta
@@ -80,11 +79,15 @@ export default function Login() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="md:text-xl">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="seu@email.com" {...field} />
+                        <Input
+                          placeholder="seu@email.com"
+                          {...field}
+                          className="md:text-xl"
+                        />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="md:text-xl">
                         Insira seu email para acessar sua conta
                       </FormDescription>
                       <FormMessage />
@@ -96,22 +99,26 @@ export default function Login() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Senha</FormLabel>
+                      <FormLabel className="md:text-xl">Senha</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
                           placeholder="********"
                           {...field}
+                          className="md:text-xl"
                         />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="md:text-xl">
                         Insira sua senha para acessar sua conta
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="bg-red-400 font-bold">
+                <Button
+                  type="submit"
+                  className="bg-indigo-500 font-bold md:text-2xl"
+                >
                   Login
                 </Button>
               </form>
