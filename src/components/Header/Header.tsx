@@ -2,6 +2,7 @@
 
 import { HeartIcon } from "@/assets/icons";
 import useHasScrolled from "@/hooks/useHasScrolled";
+import HeaderUser from "./HeaderUser";
 
 export default function Header() {
   const { scrolled } = useHasScrolled({ offsetThreshold: 300 });
@@ -18,16 +19,19 @@ export default function Header() {
         scrolled ? headerClassesAfterScroll : initialHeaderClasses
       }`}
     >
-      <div className="flex gap-4">
+      <a href="/" className="flex gap-4">
         <HeartIcon
           size={32}
           className={`${scrolled ? "text-red-500" : "text-mBlue-300"}`}
         />
         <h2 className="font-bold text-2xl">Menteliz</h2>
-      </div>
+      </a>
       <div className="flex gap-3">
         <h4 className="font-semibold hover:underline">Sobre</h4>
         <h4 className="font-semibold hover:underline">Contato</h4>
+        <div className="flex justify-end">
+          <HeaderUser />
+        </div>
       </div>
     </header>
   );
