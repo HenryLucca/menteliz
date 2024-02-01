@@ -4,23 +4,26 @@ export type CommonUser = {
 };
 
 type Patient = CommonUser & {
-  type: "patient";
-  birthDate: Date;
-  gender: "male" | "female" | "other";
-  address: string;
+  type: "patients";
+  birthDate?: Date;
+  gender?: "male" | "female" | "other";
+  address?: string;
+  username?: string;
 };
 
 type Doctor = CommonUser & {
-  type: "doctor";
-  licenseInfo: string;
-  specialization: string;
-  contact: string;
+  type: "doctors";
+  licenseInfo?: string;
+  specialization?: string;
+  contact?: string;
+  username?: string;
 };
 
 type Family = CommonUser & {
-  type: "family";
-  relationship: string;
-  contact: string;
+  type: "family_members";
+  relationship?: string;
+  contact?: string;
+  username?: string;
 };
 
 export function createCommonUser(
