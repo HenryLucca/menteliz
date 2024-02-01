@@ -41,10 +41,7 @@ export default function AuthProvider({
     const session = await supabase.auth.getSession();
 
     const user = session?.data.session?.user;
-    // const userData: User = {
-    //   id: user?.id,
-    //   email: user?.email,
-    // };
+
     const userData = await createCommonUser(user?.id, user?.email);
     setUser(userData);
 
