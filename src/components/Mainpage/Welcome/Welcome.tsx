@@ -21,9 +21,9 @@ export default function Welcome() {
           </p>
         </div>
         <div className="flex gap-4">
-          <a href="#sobre">
+          <a href="/login">
             <Button className="bg-mBlue-600 text-lg hover:bg-mBlue-400 font-semibold">
-              Venha conhecer mais
+              Venha fazer parte
             </Button>
           </a>
           <a href="">
