@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 
 import AuthContextProvider from "@/contexts/AuthContext";
+import UserDataContextProvider from "@/contexts/UserDataContext";
 
 import { cn } from "@/lib/utils";
 
@@ -29,7 +30,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <AuthContextProvider>
+          <UserDataContextProvider>{children}</UserDataContextProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );
