@@ -117,7 +117,7 @@ export default function Login() {
                 />
                 <Button
                   type="submit"
-                  className="bg-indigo-500 font-bold md:text-2xl"
+                  className="bg-indigo-500 font-bold md:text-xl"
                 >
                   Login
                 </Button>
