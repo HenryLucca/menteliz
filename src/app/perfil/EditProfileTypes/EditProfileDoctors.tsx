@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useUserDataContext } from "@/contexts/UserDataContext";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -41,6 +42,7 @@ interface EditProfileDoctorsProps {
 }
 
 export default function EditProfileDoctors(props: EditProfileDoctorsProps) {
+  const { updateUser } = useUserDataContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +56,19 @@ export default function EditProfileDoctors(props: EditProfileDoctorsProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const user: User = {
+      ...props.user,
+      type: "doctors",
+      username: values.username,
+      licenseInfo: values.licenseInfo,
+      specialization: values.specialization,
+      contact: values.contact,
+    };
+    if (updateUser) {
+      updateUser(user).then((data) => {
+        console.log(data);
+      });
+    }
   }
 
   return (
