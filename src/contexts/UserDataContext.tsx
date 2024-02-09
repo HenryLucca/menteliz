@@ -5,6 +5,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "@/lib/supabase";
 import { User } from "@/models/User";
 import { useAuthContext } from "./AuthContext";
+import { PostgrestError } from "@supabase/supabase-js";
 
 interface UserDataContextProps {
   userData?: User;
@@ -12,6 +13,9 @@ interface UserDataContextProps {
     userType: "patients" | "family_members" | "doctors",
     username: string
   ) => Promise<void>;
+  updateUser?: (
+    user: User
+  ) => Promise<{ data: any; error: PostgrestError | null }>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -55,7 +59,24 @@ export default function UserDataProvider({
     setUserData({ ...user, type: userType });
   };
 
-  //
+  const updateUser = async (user: User) => {
+    const { data, error } = await supabase
+      .from(user.type)
+      .update(user)
+      .eq("id", user.id);
+
+    console.log("data- ", data);
+
+    if (error) {
+      throw error;
+    }
+
+    setUserData(user);
+
+    return { data, error };
+  };
+
+  // config user data
   useEffect(() => {
     const configUser = async () => {
       if (user) {
@@ -85,7 +106,7 @@ export default function UserDataProvider({
   }, [user]);
 
   return (
-    <UserDataContext.Provider value={{ userData, createUser }}>
+    <UserDataContext.Provider value={{ userData, createUser, updateUser }}>
       {children}
     </UserDataContext.Provider>
   );
