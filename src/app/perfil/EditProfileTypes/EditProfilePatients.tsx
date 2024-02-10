@@ -31,6 +31,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUserDataContext } from "@/contexts/UserDataContext";
 
 const formSchema = z.object({
   username: z.string().min(5, {
@@ -66,6 +67,8 @@ const genders = [
 ] as const;
 
 export default function EditProfilePatients(props: EditProfilePatientsProps) {
+  const { updateUser } = useUserDataContext();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -81,7 +84,20 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const user: User = {
+      ...props.user,
+      type: "patients",
+      username: values.username,
+      address: values.address,
+      age: values.age,
+      gender: values.gender,
+    };
+
+    if (updateUser) {
+      updateUser(user).then((data) => {
+        console.log(data);
+      });
+    }
   }
 
   return (
