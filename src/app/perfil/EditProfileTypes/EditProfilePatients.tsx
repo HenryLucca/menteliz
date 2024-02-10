@@ -46,9 +46,9 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: props.user.username,
-      address: props.user.address,
-      age: props.user.age,
+      username: props.user.username || "",
+      address: props.user.address || "",
+      age: props.user.age || 0,
       gender: props.user.gender as
         | "Masculino"
         | "Feminino"
@@ -105,7 +105,7 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
         />
 
         {/* age */}
-        {/* <FormField
+        <FormField
           control={form.control}
           name="age"
           render={({ field }) => (
@@ -118,10 +118,10 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         {/* address */}
-        {/* <FormField
+        <FormField
           control={form.control}
           name="address"
           render={({ field }) => (
@@ -136,7 +136,7 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
