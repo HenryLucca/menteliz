@@ -6,7 +6,7 @@ export interface CommonUser {
 export interface Patient extends CommonUser {
   type: "patients";
   age?: number;
-  gender?: "male" | "female" | "other";
+  gender?: "Masculino" | "Feminino" | "Outro";
   address?: string;
   username?: string;
 }
