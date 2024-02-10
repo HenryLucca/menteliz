@@ -15,7 +15,7 @@ interface UserDataContextProps {
   ) => Promise<void>;
   updateUser?: (
     user: User
-  ) => Promise<{ data: any; error: PostgrestError | null }>;
+  ) => Promise<{ sucess: boolean; error: PostgrestError | null }>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -60,6 +60,8 @@ export default function UserDataProvider({
   };
 
   const updateUser = async (user: User) => {
+    console.log("user- ", user);
+
     const { data, error } = await supabase
       .from(user.type)
       .update(user)
@@ -73,7 +75,7 @@ export default function UserDataProvider({
 
     setUserData(user);
 
-    return { data, error };
+    return { sucess: true, error };
   };
 
   // config user data
