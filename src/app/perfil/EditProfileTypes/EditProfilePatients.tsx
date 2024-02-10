@@ -16,7 +16,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   username: z.string().min(5, {
@@ -25,10 +39,13 @@ const formSchema = z.object({
   gender: z.enum(["Masculino", "Feminino", "Outro"], {
     required_error: "Selecione seu gênero.",
   }),
-  age: z.number({
-    required_error: "Insira sua idade.",
-    invalid_type_error: "Insira um número válido.",
-  }),
+  age: z
+    .number({
+      required_error: "Insira sua idade.",
+    })
+    .gte(12, {
+      message: "Você deve ter no mínimo 12 anos.",
+    }),
   address: z.string({
     required_error: "Insira seu endereço.",
   }),
@@ -41,6 +58,12 @@ interface EditProfilePatientsProps {
     gender: string;
   };
 }
+
+const genders = [
+  { label: "Masculino", value: "Masculino" },
+  { label: "Feminino", value: "Feminino" },
+  { label: "Outro", value: "Outro" },
+] as const;
 
 export default function EditProfilePatients(props: EditProfilePatientsProps) {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -89,15 +112,60 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
           control={form.control}
           name="gender"
           render={({ field }) => (
-            <FormItem className="">
-              <div className="flex items-baseline gap-4">
+            <FormItem className="flex flex-col">
+              <div className="flex items-center gap-3">
                 <FormLabel>Gênero</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-[200px] justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value
+                          ? genders.find(
+                              (gender) => gender.value === field.value
+                            )?.label
+                          : "Selecionar gênero..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Escolher gênero..." />
+                      <CommandEmpty>No gender found.</CommandEmpty>
+                      <CommandGroup>
+                        {genders.map((gender) => (
+                          <CommandItem
+                            value={gender.label}
+                            key={gender.value}
+                            onSelect={() => {
+                              form.setValue("gender", gender.value);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                gender.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {gender.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
               <FormDescription>
-                Seu nome completo, como você gostaria de ser chamado.
+                Seu gênero, como você se identifica.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -112,7 +180,11 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
             <FormItem className="">
               <FormLabel>Idade</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(parseInt(e.target.value))}
+                />
               </FormControl>
               <FormDescription>Sua idade atual, em anos.</FormDescription>
               <FormMessage />
@@ -126,10 +198,12 @@ export default function EditProfilePatients(props: EditProfilePatientsProps) {
           name="address"
           render={({ field }) => (
             <FormItem className="">
-              <FormLabel>Endereço</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
+              <div className="flex items-baseline gap-4">
+                <FormLabel>Endereço</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+              </div>
               <FormDescription>
                 Seu endereço completo, incluindo o número.
               </FormDescription>
