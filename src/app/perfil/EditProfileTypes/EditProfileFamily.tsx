@@ -20,10 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 interface EditProfileFamilyProps {
-  user: {
-    type: "family_members";
-    username: string;
-    email: string;
+  user: User & {
     relationship: string;
     contact: string;
   };
