@@ -21,23 +21,25 @@ export default function HeaderUser() {
           <DropdownMenuTrigger>
             <UserIcon size={24} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="pt-2">
             <a href="/humor">
-              <DropdownMenuItem>Rastreador de Humor</DropdownMenuItem>
+              <DropdownMenuItem className="">
+                Rastreador de Humor
+              </DropdownMenuItem>
             </a>
             <a href="/medicacoes">
-              <DropdownMenuItem>Medicações</DropdownMenuItem>
+              <DropdownMenuItem className="">Medicações</DropdownMenuItem>
             </a>
             <a href="/recursos">
-              <DropdownMenuItem>Recursos</DropdownMenuItem>
+              <DropdownMenuItem className="">Recursos</DropdownMenuItem>
             </a>
 
-            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <a href="/perfil">
               <DropdownMenuItem>Gerenciar perfil</DropdownMenuItem>
             </a>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-zinc-200">
               <Button variant="destructive" size={"sm"} onClick={signOut}>
                 Logout
               </Button>
