@@ -17,6 +17,7 @@ interface UserDataContextProps {
     user: User
   ) => Promise<{ sucess: boolean; error: PostgrestError | null }>;
   searchUser?: (search: string) => Promise<any>;
+  requestConnection?: (user: User) => Promise<void>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -90,9 +91,6 @@ export default function UserDataProvider({
       .select()
       .eq("id", `${search}`);
 
-    console.log("doctors- ", doctors);
-    console.log("family- ", family);
-
     const data: any[] = [];
 
     if (doctors) {
@@ -103,6 +101,46 @@ export default function UserDataProvider({
     }
 
     return data;
+  };
+
+  const requestConnection = async (user: User) => {
+    // check if the user is already connected
+    const { data: connections, error: connectionsError } = await supabase
+      .from("connections")
+      .select()
+      .eq("patient_id", userData?.id)
+      .eq("doctor_id", user.id);
+
+    if (connections && connections.length > 0) {
+      console.log("user is already connected");
+      return;
+    }
+
+    // check if the user has already sent a connection request
+    const { data: requests, error: requestsError } = await supabase
+      .from("connection_requests")
+      .select()
+      .eq("sender_id", userData?.id)
+      .eq("receiver_id", user.id);
+
+    if (requests && requests.length > 0) {
+      console.log("user has already sent a connection request");
+      return;
+    }
+
+    // make connection request
+    const connectionTypes = {
+      patients: "patient_patient",
+      doctors: "patient_doctor",
+      family_members: "patient_family",
+    };
+
+    const { data, error } = await supabase.from("connection_requests").insert({
+      sender_id: userData?.id,
+      receiver_id: user.id,
+      connection_type: connectionTypes[user.type],
+      status: "pending",
+    });
   };
 
   // config user data
@@ -136,7 +174,13 @@ export default function UserDataProvider({
 
   return (
     <UserDataContext.Provider
-      value={{ userData, createUser, updateUser, searchUser }}
+      value={{
+        userData,
+        createUser,
+        updateUser,
+        searchUser,
+        requestConnection,
+      }}
     >
       {children}
     </UserDataContext.Provider>
