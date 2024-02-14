@@ -31,13 +31,13 @@ export default function UserCard(props: UserCardProps) {
     <>
       <Card className="bg-zinc-50 w-60">
         <CardHeader>
+          <CardTitle>{user.username}</CardTitle>
           <div className="flex gap-2">
             {user.type && userIcon[user.type]}
-            <CardTitle>{user.username}</CardTitle>
+            <CardDescription>
+              {user.type && typeTranslation[user.type]}
+            </CardDescription>
           </div>
-          <CardDescription>
-            {user.type && typeTranslation[user.type]}
-          </CardDescription>
         </CardHeader>
 
         <CardContent>
