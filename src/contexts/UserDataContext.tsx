@@ -16,6 +16,7 @@ interface UserDataContextProps {
   updateUser?: (
     user: User
   ) => Promise<{ sucess: boolean; error: PostgrestError | null }>;
+  searchUser?: (search: string) => Promise<any>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -78,6 +79,45 @@ export default function UserDataProvider({
     return { sucess: true, error };
   };
 
+  const searchUser = async (search: string) => {
+    const { data, error } = await supabase
+      .from("doctors")
+      .select()
+      .ilike("username", `%${search}%`);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  };
+
+  async function searchDoctor(search: string) {
+    const { data, error } = await supabase
+      .from("doctors")
+      .select()
+      .ilike("username", `%${search}%`);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
+
+  async function searchFamilyMember(search: string) {
+    const { data, error } = await supabase
+      .from("family_members")
+      .select()
+      .ilike("id", `%${search}%`);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
+
   // config user data
   useEffect(() => {
     const configUser = async () => {
@@ -108,7 +148,9 @@ export default function UserDataProvider({
   }, [user]);
 
   return (
-    <UserDataContext.Provider value={{ userData, createUser, updateUser }}>
+    <UserDataContext.Provider
+      value={{ userData, createUser, updateUser, searchUser }}
+    >
       {children}
     </UserDataContext.Provider>
   );
