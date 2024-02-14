@@ -6,6 +6,8 @@ import { Search } from "lucide-react";
 import { useUserDataContext } from "@/contexts/UserDataContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import UserCard from "@/components/ConnectUserCard/UserCard";
+import { User } from "@/models/User";
 
 export default function SearchConnections() {
   const { searchUser } = useUserDataContext();
@@ -19,6 +21,10 @@ export default function SearchConnections() {
       setSearchData(data);
       console.log("searchData- ", data);
     }
+  };
+
+  const handleConnect = async (user: User) => {
+    console.log("Connecting to user: ", user);
   };
 
   useEffect(() => {});
@@ -54,14 +60,16 @@ export default function SearchConnections() {
       </div>
 
       {searchData.length > 0 && (
-        <ul className="grid place-items-center">
+        <ul className="grid place-items-center m-4">
           {searchData.map((userArray: any[], index: number) => {
             if (userArray) {
-              return userArray.map((user: any) => {
+              return userArray.map((user: User) => {
                 return (
-                  <div key={user.id}>
-                    <p>{user.username}</p>
-                  </div>
+                  <UserCard
+                    key={index}
+                    user={user}
+                    onClick={(user: User) => handleConnect(user)}
+                  />
                 );
               });
             } else {
