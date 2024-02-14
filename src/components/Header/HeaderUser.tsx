@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 
 export default function HeaderUser() {
   const { user, signOut } = useAuthContext();
+
   return (
     <>
       {user?.email && (
@@ -21,6 +22,7 @@ export default function HeaderUser() {
           <DropdownMenuTrigger>
             <UserIcon size={24} />
           </DropdownMenuTrigger>
+
           <DropdownMenuContent className="pt-2">
             <a href="/humor">
               <DropdownMenuItem className="">
@@ -38,6 +40,9 @@ export default function HeaderUser() {
             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <a href="/perfil">
               <DropdownMenuItem>Gerenciar perfil</DropdownMenuItem>
+            </a>
+            <a href="/conectar">
+              <DropdownMenuItem>Gerenciar Conexões</DropdownMenuItem>
             </a>
             <DropdownMenuItem className="hover:bg-zinc-200">
               <Button variant="destructive" size={"sm"} onClick={signOut}>
