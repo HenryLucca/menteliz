@@ -4,13 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { useUserDataContext } from "@/contexts/UserDataContext";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UserCard from "@/components/ConnectUserCard/UserCard";
 import { User } from "@/models/User";
 
 export default function SearchConnections() {
-  const { searchUser } = useUserDataContext();
+  const { searchUser, requestConnection } = useUserDataContext();
   const [searchData, setSearchData] = useState([] as any);
   const [search, setSearch] = useState("");
 
@@ -24,10 +23,10 @@ export default function SearchConnections() {
   };
 
   const handleConnect = async (user: User) => {
-    console.log("Connecting to user: ", user);
+    if (requestConnection) {
+      await requestConnection(user);
+    }
   };
-
-  useEffect(() => {});
 
   return (
     <section className="w-full min-h-screen">
