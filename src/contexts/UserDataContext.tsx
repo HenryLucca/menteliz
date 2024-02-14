@@ -80,43 +80,30 @@ export default function UserDataProvider({
   };
 
   const searchUser = async (search: string) => {
-    const { data, error } = await supabase
+    const { data: doctors } = await supabase
       .from("doctors")
       .select()
       .ilike("username", `%${search}%`);
 
-    if (error) {
-      throw error;
+    const { data: family } = await supabase
+      .from("family_members")
+      .select()
+      .eq("id", `${search}`);
+
+    console.log("doctors- ", doctors);
+    console.log("family- ", family);
+
+    const data: any[] = [];
+
+    if (doctors) {
+      data.push(doctors);
+    }
+    if (family) {
+      data.push(family);
     }
 
     return data;
   };
-
-  async function searchDoctor(search: string) {
-    const { data, error } = await supabase
-      .from("doctors")
-      .select()
-      .ilike("username", `%${search}%`);
-
-    if (error) {
-      throw error;
-    }
-
-    return data;
-  }
-
-  async function searchFamilyMember(search: string) {
-    const { data, error } = await supabase
-      .from("family_members")
-      .select()
-      .ilike("id", `%${search}%`);
-
-    if (error) {
-      throw error;
-    }
-
-    return data;
-  }
 
   // config user data
   useEffect(() => {

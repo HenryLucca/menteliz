@@ -54,15 +54,21 @@ export default function SearchConnections() {
       </div>
 
       {searchData.length > 0 && (
-        <div className="grid place-items-center">
-          {searchData.map((user: any) => {
-            return (
-              <div key={user.id}>
-                <p>{user.username}</p>
-              </div>
-            );
+        <ul className="grid place-items-center">
+          {searchData.map((userArray: any[], index: number) => {
+            if (userArray) {
+              return userArray.map((user: any) => {
+                return (
+                  <div key={user.id}>
+                    <p>{user.username}</p>
+                  </div>
+                );
+              });
+            } else {
+              return null;
+            }
           })}
-        </div>
+        </ul>
       )}
     </section>
   );
