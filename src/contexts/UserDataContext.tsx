@@ -17,7 +17,9 @@ interface UserDataContextProps {
     user: User
   ) => Promise<{ sucess: boolean; error: PostgrestError | null }>;
   searchUser?: (search: string) => Promise<any>;
+  searchUserById?: (id: string) => Promise<any>;
   requestConnection?: (user: User) => Promise<void>;
+  checkConnectionRequests?: () => Promise<any>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -103,6 +105,38 @@ export default function UserDataProvider({
     return data;
   };
 
+  const searchUserById = async (id: string) => {
+    const { data: patients } = await supabase
+      .from("patients")
+      .select()
+      .eq("id", id);
+
+    const { data: doctors } = await supabase
+      .from("doctors")
+      .select()
+      .eq("id", id);
+
+    const { data: family } = await supabase
+      .from("family_members")
+      .select()
+      .eq("id", id);
+
+    const data: any[] = [];
+
+    if (patients) {
+      data.push(patients);
+    }
+
+    if (doctors) {
+      data.push(doctors);
+    }
+    if (family) {
+      data.push(family);
+    }
+
+    return data;
+  };
+
   const requestConnection = async (user: User) => {
     // check if the user is already connected
     const { data: connections, error: connectionsError } = await supabase
@@ -120,8 +154,8 @@ export default function UserDataProvider({
     const { data: requests, error: requestsError } = await supabase
       .from("connection_requests")
       .select()
-      .eq("sender_id", userData?.id)
-      .eq("receiver_id", user.id);
+      .eq("senderId", userData?.id)
+      .eq("receiverId", user.id);
 
     if (requests && requests.length > 0) {
       console.log("user has already sent a connection request");
@@ -141,6 +175,25 @@ export default function UserDataProvider({
       connection_type: connectionTypes[user.type],
       status: "pending",
     });
+  };
+
+  const acceptConnection = async (user: User) => {};
+
+  const rejectConnection = async (user: User) => {};
+
+  const checkConnectionRequests = async () => {
+    const { data, error } = await supabase
+      .from("connection_requests")
+      .select()
+      .eq("receiverId", userData?.id);
+
+    console.log("connectionrequest data- ", data);
+
+    if (data && data.length > 0) {
+      return data;
+    }
+
+    return null;
   };
 
   // config user data
@@ -179,7 +232,9 @@ export default function UserDataProvider({
         createUser,
         updateUser,
         searchUser,
+        searchUserById,
         requestConnection,
+        checkConnectionRequests,
       }}
     >
       {children}
