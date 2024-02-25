@@ -20,6 +20,8 @@ interface UserDataContextProps {
   searchUserById?: (id: string) => Promise<any>;
   requestConnection?: (user: User) => Promise<void>;
   checkConnectionRequests?: () => Promise<any>;
+  acceptConnection?: (user: User) => Promise<void>;
+  rejectConnection?: (user: User) => Promise<void>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -121,17 +123,18 @@ export default function UserDataProvider({
       .select()
       .eq("id", id);
 
-    const data: any[] = [];
+    let data: User | null = null;
 
-    if (patients) {
-      data.push(patients);
+    if (patients && patients.length > 0) {
+      data = patients[0];
     }
 
-    if (doctors) {
-      data.push(doctors);
+    if (doctors && doctors.length > 0) {
+      data = doctors[0];
     }
-    if (family) {
-      data.push(family);
+
+    if (family && family.length > 0) {
+      data = family[0];
     }
 
     return data;
@@ -177,23 +180,67 @@ export default function UserDataProvider({
     });
   };
 
-  const acceptConnection = async (user: User) => {};
-
-  const rejectConnection = async (user: User) => {};
-
   const checkConnectionRequests = async () => {
     const { data, error } = await supabase
       .from("connection_requests")
       .select()
       .eq("receiverId", userData?.id);
 
-    console.log("connectionrequest data- ", data);
-
     if (data && data.length > 0) {
       return data;
     }
 
     return null;
+  };
+
+  const acceptConnection = async (user: User) => {
+    // accept connection then delete the connection request
+    let connectionType;
+
+    if (userData.type === "doctors") {
+      connectionType = "patient_doctor";
+    } else if (userData.type === "family_members") {
+      connectionType = "patient_family";
+    } else {
+      connectionType = "patient_patient";
+    }
+
+    const { data, error } = await supabase.from("user_connections").insert([
+      {
+        patient_id: userData?.id,
+        user_id: user.id,
+        connection_type: connectionType,
+      },
+    ]);
+
+    if (error) {
+      throw error;
+    }
+
+    const { data: requests, error: requestsError } = await supabase
+      .from("connection_requests")
+      .delete()
+      .eq("senderId", user.id)
+      .eq("receiverId", userData?.id);
+
+    if (requestsError) {
+      throw requestsError;
+    }
+
+    console.log("requests- ", requests);
+  };
+
+  const rejectConnection = async (user: User) => {
+    // delete the connection request
+    const { data, error } = await supabase
+      .from("connection_requests")
+      .delete()
+      .eq("senderId", user.id)
+      .eq("receiverId", userData?.id);
+
+    if (error) {
+      throw error;
+    }
   };
 
   // config user data
@@ -235,6 +282,8 @@ export default function UserDataProvider({
         searchUserById,
         requestConnection,
         checkConnectionRequests,
+        acceptConnection,
+        rejectConnection,
       }}
     >
       {children}
