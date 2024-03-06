@@ -42,7 +42,7 @@ export default function PendentConnections() {
           </ul>
         </div>
       ) : (
-        <div>
+        <div className="grid place-items-center">
           <h1>Nenhuma conexão pendente</h1>
         </div>
       )}
