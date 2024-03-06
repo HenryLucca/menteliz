@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
+import { useUserDataContext } from "@/contexts/UserDataContext";
 
 const FormSchema = z.object({
   note: z
@@ -31,6 +32,8 @@ const FormSchema = z.object({
 });
 
 export default function CreateNoteForm() {
+  const { createNote } = useUserDataContext();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -41,6 +44,9 @@ export default function CreateNoteForm() {
       mood: data.mood,
       content: data.note || "",
     };
+
+    const res = createNote?.(note);
+    console.log(res);
 
     // Send note to the server
   }
