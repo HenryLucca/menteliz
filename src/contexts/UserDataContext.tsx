@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { User } from "@/models/User";
 import { useAuthContext } from "./AuthContext";
 import { PostgrestError } from "@supabase/supabase-js";
+import { Note } from "@/models/Note";
 
 interface UserDataContextProps {
   userData?: User;
@@ -22,6 +23,7 @@ interface UserDataContextProps {
   checkConnectionRequests?: () => Promise<any>;
   acceptConnection?: (user: User) => Promise<void>;
   rejectConnection?: (user: User) => Promise<void>;
+  createNote?: (note: Note) => Promise<any>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -243,6 +245,22 @@ export default function UserDataProvider({
     }
   };
 
+  const createNote = async (note: Note) => {
+    const { data, error } = await supabase.from("mood_notes").insert({
+      patient_id: userData?.id,
+      mood: note.mood,
+      content: note.content,
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    console.log("data- ", data);
+
+    return data;
+  };
+
   // config user data
   useEffect(() => {
     const configUser = async () => {
@@ -284,6 +302,7 @@ export default function UserDataProvider({
         checkConnectionRequests,
         acceptConnection,
         rejectConnection,
+        createNote,
       }}
     >
       {children}
