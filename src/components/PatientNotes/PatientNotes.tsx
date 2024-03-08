@@ -1,0 +1,36 @@
+"use client";
+
+import { useUserDataContext } from "@/contexts/UserDataContext";
+import { Note } from "@/models/Note";
+import { Patient } from "@/models/User";
+import { useEffect, useState } from "react";
+import PatientNote from "./PatientNote";
+
+interface PatientNotesProps {
+  patient: Patient;
+}
+
+export default function PatientNotes(props: PatientNotesProps) {
+  const { patient } = props;
+  const { listNotes } = useUserDataContext();
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    if (listNotes) {
+      listNotes(patient).then((notes) => {
+        setNotes(notes);
+      });
+    }
+  }, [listNotes, patient]);
+
+  return (
+    <section>
+      <h1>Notas do paciente</h1>
+      <ul className="flex flex-col">
+        {notes.map((note, index) => (
+          <PatientNote key={index} note={note} />
+        ))}
+      </ul>
+    </section>
+  );
+}
