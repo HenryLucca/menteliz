@@ -24,9 +24,10 @@ export default function PatientNotes(props: PatientNotesProps) {
   }, [listNotes, patient]);
 
   return (
-    <section>
-      <h1>Notas do paciente</h1>
-      <ul className="flex flex-col">
+    <section className="space-y-4">
+      <h1 className="text-lg font-medium tracking-tight">Notas do paciente</h1>
+
+      <ul className="flex flex-col gap-2">
         {notes.map((note, index) => (
           <PatientNote key={index} note={note} />
         ))}
