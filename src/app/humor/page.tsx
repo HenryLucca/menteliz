@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/components/Header/Header";
 import { useUserDataContext } from "@/contexts/UserDataContext";
-import PatientHumor from "./patient/PatientPage";
+import PatientPage from "./patient/PatientPage";
 
 export default function Humor() {
   const { userData } = useUserDataContext();
@@ -12,14 +12,11 @@ export default function Humor() {
 
   return (
     <>
-      <Header />
-      <main className="p-12 sm:p-16">
-        {userData?.type == "patients" ? (
-          <PatientHumor />
-        ) : (
-          <h1>Humor do médico</h1>
-        )}
-      </main>
+      {userData?.type == "patients" ? (
+        <PatientPage />
+      ) : (
+        <h1>Humor do médico</h1>
+      )}
     </>
   );
 }

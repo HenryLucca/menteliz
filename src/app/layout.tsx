@@ -6,6 +6,8 @@ import AuthContextProvider from "@/contexts/AuthContext";
 import UserDataContextProvider from "@/contexts/UserDataContext";
 
 import { cn } from "@/lib/utils";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,7 +33,11 @@ export default function RootLayout({
         )}
       >
         <AuthContextProvider>
-          <UserDataContextProvider>{children}</UserDataContextProvider>
+          <UserDataContextProvider>
+            <Header />
+            {children}
+            <Footer />
+          </UserDataContextProvider>
         </AuthContextProvider>
       </body>
     </html>
