@@ -43,12 +43,10 @@ export default function CreateNoteForm() {
     const note: Note = {
       mood: data.mood,
       content: data.note || "",
+      createdAt: new Date().toISOString(),
     };
 
     const res = createNote?.(note);
-    console.log(res);
-
-    // Send note to the server
   }
 
   return (
