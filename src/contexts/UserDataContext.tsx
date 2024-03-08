@@ -251,7 +251,7 @@ export default function UserDataProvider({
       patient_id: userData?.id,
       mood: note.mood,
       content: note.content,
-      created_at: note.createdAt,
+      createdAt: note.createdAt,
     });
 
     if (error) {
@@ -267,7 +267,8 @@ export default function UserDataProvider({
     const { data, error } = await supabase
       .from("mood_notes")
       .select()
-      .eq("patient_id", patient?.id);
+      .eq("patient_id", patient?.id)
+      .order("createdAt", { ascending: false });
 
     console.log("data- ", data);
 
