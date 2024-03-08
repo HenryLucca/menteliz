@@ -3,7 +3,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 
 import { supabase } from "@/lib/supabase";
-import { User } from "@/models/User";
+import { Patient, User } from "@/models/User";
 import { useAuthContext } from "./AuthContext";
 import { PostgrestError } from "@supabase/supabase-js";
 import { Note } from "@/models/Note";
@@ -24,6 +24,7 @@ interface UserDataContextProps {
   acceptConnection?: (user: User) => Promise<void>;
   rejectConnection?: (user: User) => Promise<void>;
   createNote?: (note: Note) => Promise<any>;
+  listNotes?: (patient: Patient) => Promise<Note[]>;
 }
 
 export const UserDataContext = createContext<UserDataContextProps>({});
@@ -250,6 +251,7 @@ export default function UserDataProvider({
       patient_id: userData?.id,
       mood: note.mood,
       content: note.content,
+      created_at: note.createdAt,
     });
 
     if (error) {
@@ -257,6 +259,21 @@ export default function UserDataProvider({
     }
 
     console.log("data- ", data);
+
+    return data;
+  };
+
+  const listNotes = async (patient: Patient) => {
+    const { data, error } = await supabase
+      .from("mood_notes")
+      .select()
+      .eq("patient_id", patient?.id);
+
+    console.log("data- ", data);
+
+    if (error) {
+      throw error;
+    }
 
     return data;
   };
@@ -274,7 +291,6 @@ export default function UserDataProvider({
             .select("id, username")
             .eq("id", user?.id);
 
-          console.log("data: ", data);
           if (data && data.length > 0) {
             setUserData({
               ...user,
@@ -303,6 +319,7 @@ export default function UserDataProvider({
         acceptConnection,
         rejectConnection,
         createNote,
+        listNotes,
       }}
     >
       {children}
