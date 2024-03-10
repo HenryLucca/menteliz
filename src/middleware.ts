@@ -20,5 +20,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
   // this regex will match any url that does not contain:
   //_next/static, _next/image, favicon.ico, or is the root or login page
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|^$|login|register).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|^$|login|register|api).*)",
+  ],
 };
