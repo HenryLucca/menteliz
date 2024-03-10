@@ -50,9 +50,7 @@ export default function Login() {
   }
   return (
     <>
-      <Header />
-
-      <main className="min-h-[80svh] bg-mBlue-200">
+      <main className="min-h-[100svh] bg-mBlue-200">
         <div className="flex flex-col justify-center items-center py-12 px-1 md:px-24">
           <div className="flex flex-col self-start">
             <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100">
@@ -126,10 +124,6 @@ export default function Login() {
           </div>
         </div>
       </main>
-
-      <footer className="flex justify-center items-center h-16 bg-zinc-200">
-        <h1 className="text-2xl font-bold text-white">footer</h1>
-      </footer>
     </>
   );
 }
