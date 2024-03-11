@@ -1,5 +1,15 @@
-export async function POST(req: any, res: Response) {
-  console.log(req.body);
+import { NextRequest } from "next/server";
 
-  return Response.json({ message: "Success!" });
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+
+  const subscription = body.subscription;
+  const userData = body.userData;
+
+  console.log(userData);
+  console.log(subscription);
+
+  // console.log(body);
+
+  return new Response("OK");
 }
