@@ -32,8 +32,8 @@ export default function HeaderUser() {
             <a href="/medicacoes">
               <DropdownMenuItem className="">Medicações</DropdownMenuItem>
             </a>
-            <a href="/recursos">
-              <DropdownMenuItem className="">Recursos</DropdownMenuItem>
+            <a href="/blog">
+              <DropdownMenuItem className="">Blog</DropdownMenuItem>
             </a>
 
             <DropdownMenuSeparator />
