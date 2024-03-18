@@ -2,6 +2,7 @@
 
 import { useEditor as useTiptap } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import FloatingMenu from "@tiptap/extension-floating-menu";
 
 const content = `
     <h2>
@@ -10,12 +11,15 @@ const content = `
     <p>
         A saúde mental é um assunto muito importante e que precisa ser discutido
     </p>
+    <p></p>
     `;
 
 export default function useEditor() {
   const editor = useTiptap({
-    extensions: [StarterKit],
+    extensions: [StarterKit, FloatingMenu],
     content: content,
+    autofocus: true,
+    editorProps: {},
   });
 
   return { editor };
