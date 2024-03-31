@@ -5,7 +5,6 @@ import EditProfile from "./EditProfile";
 export default function Perfil() {
   return (
     <>
-      <Header />
       <main>
         <section className="grid place-items-center">
           <div>
