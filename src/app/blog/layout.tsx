@@ -7,7 +7,7 @@ interface BlogLayoutProps {
 export default function Layout({ children }: BlogLayoutProps) {
   return (
     <>
-      <BlogDataProvider>{children}</BlogDataProvider>;
+      <BlogDataProvider>{children}</BlogDataProvider>
     </>
   );
 }
