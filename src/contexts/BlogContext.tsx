@@ -7,8 +7,10 @@ import { supabase } from "@/lib/supabase";
 interface BlogContextProps {
   posts?: any[];
   createBlogPost?: (
+    title: string,
     content: string,
-    doctorId: string | undefined
+    author: any,
+    doctorId: any
   ) => Promise<any>;
   listPosts?: () => Promise<void>;
 }
@@ -33,11 +35,15 @@ export default function BlogDataProvider({
   const [posts, setPosts] = useState<any[]>([]);
 
   const createBlogPost = async (
+    title: string,
     content: string,
+    author: string,
     doctorId: string | undefined
   ) => {
     const { data, error } = await supabase.from("blog_posts").insert({
+      title: title,
       content: content,
+      author: author,
       doctor_id: doctorId,
     });
 
