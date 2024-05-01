@@ -22,9 +22,15 @@ export default function Posts() {
       )}
       <div>
         {posts?.map((post) => (
-          <div key={post.id} className="border p-4 my-4">
-            <h2>{post.title}</h2>
-          </div>
+          <a key={post.id} href={`/blog/${post.post_id}`}>
+            <div
+              className={`border p-4 my-4 
+            hover:shadow-md transition-shadow duration-300
+            `}
+            >
+              <h2>{post.title}</h2>
+            </div>
+          </a>
         ))}
       </div>
     </div>
