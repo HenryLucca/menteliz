@@ -2,6 +2,7 @@
 
 import { useBlogContext } from "@/contexts/BlogContext";
 import { useEffect, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 
 export default function PostPage({ params }: { params: { id: string } }) {
   const [post, setPost] = useState<any>(null);
@@ -22,10 +23,16 @@ export default function PostPage({ params }: { params: { id: string } }) {
   }, [params, getPost]);
 
   return (
-    <div>
-      <div className="prose px-24">
+    <main className=" flex flex-col justify-center items-center p-16">
+      <div className="text-xs self-end">
+        <a href="/blog" className="flex justify-center gap-2">
+          <ArrowLeft size={16} />
+          Voltar para a lista de posts
+        </a>
+      </div>
+      <div className="prose">
         {post && <div dangerouslySetInnerHTML={{ __html: post.content }} />}
       </div>
-    </div>
+    </main>
   );
 }
