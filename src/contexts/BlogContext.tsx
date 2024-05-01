@@ -13,6 +13,7 @@ interface BlogContextProps {
     doctorId: any
   ) => Promise<any>;
   listPosts?: () => Promise<void>;
+  getPost?: (id: string) => Promise<any>;
 }
 
 export const BlogContext = createContext<BlogContextProps>({});
@@ -66,12 +67,25 @@ export default function BlogDataProvider({
     setPosts(data);
   };
 
+  const getPost = async (id: string) => {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("post_id", id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data[0];
+  };
+
   useEffect(() => {
     listPosts();
   });
 
   return (
-    <BlogContext.Provider value={{ posts, createBlogPost, listPosts }}>
+    <BlogContext.Provider value={{ posts, createBlogPost, listPosts, getPost }}>
       {children}
     </BlogContext.Provider>
   );
