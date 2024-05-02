@@ -41,20 +41,21 @@ export default function BlogDataProvider({
     author: string,
     doctorId: string | undefined
   ) => {
-    const { data, error } = await supabase.from("blog_posts").insert({
-      title: title,
-      content: content,
-      author: author,
-      doctor_id: doctorId,
-    });
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .insert({
+        title: title,
+        content: content,
+        author: author,
+        doctor_id: doctorId,
+      })
+      .select("*");
 
     if (error) {
       throw error;
     }
 
-    console.log(data);
-
-    return data;
+    return data[0];
   };
 
   const listPosts = async () => {
