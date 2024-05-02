@@ -4,7 +4,7 @@ import { useEditor as useTiptap } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import FloatingMenu from "@tiptap/extension-floating-menu";
 
-const content = `
+const initialContent = `
     <h2>
         Menteliz
     </h2>
@@ -17,7 +17,7 @@ const content = `
 export default function useEditor() {
   const editor = useTiptap({
     extensions: [StarterKit, FloatingMenu],
-    content: content,
+    content: initialContent,
     autofocus: true,
     editorProps: {},
   });
