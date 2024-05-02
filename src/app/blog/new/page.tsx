@@ -21,7 +21,6 @@ export default function CreatePostPage() {
     const editorContent = editor?.getHTML();
 
     if (editorContent && createBlogPost) {
-      console.log(editorContent, userData?.id);
       const post = await createBlogPost(
         title,
         editorContent,
@@ -29,8 +28,8 @@ export default function CreatePostPage() {
         userData?.id
       );
 
-      console.log(post);
       editor?.destroy();
+      router.push(`/blog/${post?.post_id}`);
     }
   }
 
@@ -54,9 +53,11 @@ export default function CreatePostPage() {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
+
         <div>
-          <Editor />
+          <Editor editor={editor} />
         </div>
+
         <Button
           onClick={handleSave}
           className="w-1/2 self-end justify-self-end"
