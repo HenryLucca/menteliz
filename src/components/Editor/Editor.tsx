@@ -5,8 +5,13 @@ import useEditor from "@/hooks/useEditor";
 import { Button } from "../ui/button";
 import FloatingMenu from "./EditorFloatingMenu";
 
-export default function Editor() {
-  const { editor } = useEditor();
+interface EditorProps {
+  editor?: any;
+  onSave?: () => void;
+}
+
+export default function Editor({ editor }: EditorProps) {
+  // const { editor } = useEditor();
 
   return (
     <>
