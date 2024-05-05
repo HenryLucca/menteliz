@@ -15,9 +15,14 @@ export default function NotFound() {
             acesso.
           </p>
           <div>
-            <Button className="text-xl">
-              <a href="/">Voltar para a página inicial</a>
-            </Button>
+            <Link href="/" passHref>
+              <p
+                className={`text-lg underline underline-offset-4 text-mBlue-500 hover:right-2 transition-all 
+              `}
+              >
+                Voltar para a página inicial
+              </p>
+            </Link>
           </div>
         </div>
 

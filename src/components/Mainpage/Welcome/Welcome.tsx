@@ -20,7 +20,7 @@ export default function Welcome() {
             anotar suas emoções, lembrar o horário de suas medicações e mais.
           </p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <a href="/login">
             <Button className="bg-mBlue-600 text-lg hover:bg-mBlue-400 font-semibold">
               Venha fazer parte
@@ -28,7 +28,7 @@ export default function Welcome() {
           </a>
           <a href="">
             <Button
-              variant={"outline"}
+              variant={"ghost"}
               className="bg-mBlue-200 text-lg hover:bg-mBlue-300 border-black font-medium"
             >
               Sobre o Menteliz
