@@ -1,22 +1,18 @@
 "use client";
-import Header from "@/components/Header/Header";
+
 import { useUserDataContext } from "@/contexts/UserDataContext";
 import PatientPage from "./patient/PatientPage";
+import { useRouter } from "next/navigation";
+import DoctorPage from "./doctor/DoctorPage";
 
 export default function Humor() {
   const { userData } = useUserDataContext();
+  const router = useRouter();
 
   if (userData?.type == "family_members") {
-    return <h1>Usuário não autorizado</h1>;
+    // return not found page
+    router.push("/404");
   }
 
-  return (
-    <>
-      {userData?.type == "patients" ? (
-        <PatientPage />
-      ) : (
-        <h1>Humor do médico</h1>
-      )}
-    </>
-  );
+  return <>{userData?.type == "patients" ? <PatientPage /> : <DoctorPage />}</>;
 }

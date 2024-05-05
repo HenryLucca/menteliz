@@ -23,6 +23,7 @@ interface UserDataContextProps {
   checkConnectionRequests?: () => Promise<any>;
   acceptConnection?: (user: User) => Promise<void>;
   rejectConnection?: (user: User) => Promise<void>;
+  listConnections?: (id: string) => Promise<any>;
   createNote?: (note: Note) => Promise<any>;
   listNotes?: (patient: Patient) => Promise<Note[]>;
 }
@@ -246,6 +247,27 @@ export default function UserDataProvider({
     }
   };
 
+  const listConnections = async (id: string) => {
+    // get all the connections for the user
+    // return the users that are connected to the user
+    const { data: connections, error } = await supabase
+      .from("user_connections")
+      .select()
+      .eq("patient_id", userData?.id);
+
+    const users = connections?.map(async (connection) => {
+      return await searchUserById(connection.user_id);
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    const usersData = await Promise.all(users || []);
+
+    return usersData as Patient[];
+  };
+
   const createNote = async (note: Note) => {
     const { data, error } = await supabase.from("mood_notes").insert({
       patient_id: userData?.id,
@@ -319,6 +341,7 @@ export default function UserDataProvider({
         checkConnectionRequests,
         acceptConnection,
         rejectConnection,
+        listConnections,
         createNote,
         listNotes,
       }}
