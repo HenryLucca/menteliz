@@ -1,3 +1,6 @@
+"use client";
+
+import NotesDrawer from "@/components/NoteDrawer/NotesDrawer";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Patient } from "@/models/User";
 
@@ -18,7 +21,8 @@ export default function PatientInfo({ connection }: PatientInfoProps) {
         <AvatarFallback>{name}</AvatarFallback>
       </Avatar>
       <h3 className="text-lg">{connection.username}</h3>
-      <button className="text-blue-500">Ver Diário</button>
+
+      <NotesDrawer patient={connection} />
     </div>
   );
 }

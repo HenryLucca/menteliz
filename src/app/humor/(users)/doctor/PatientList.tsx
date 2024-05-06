@@ -12,9 +12,6 @@ export default function DoctorPatients() {
 
   const [search, setSearch] = useState<string>("");
 
-  console.log("isLoading:", isLoading); // Add this line
-  console.log("Skeleton:", Skeleton); // Add this line
-
   useEffect(() => {
     if (listConnections && userData && userData?.id) {
       setIsLoading(true);
@@ -43,7 +40,7 @@ export default function DoctorPatients() {
             <Skeleton className="h-12 w-12 rounded-full" />
             <Skeleton className="h-4 w-[50px]" />
             <button className="text-blue-500">Ver Diário</button>
-          </div> // Render the skeleton component if isLoading is true
+          </div>
         ) : (
           connections.length &&
           connections
