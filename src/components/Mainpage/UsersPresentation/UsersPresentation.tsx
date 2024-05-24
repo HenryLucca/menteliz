@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Cross, User, Users } from "lucide-react";
 import Link from "next/link";
+import PresentUser from "./Users";
 
 export default function UsersPresentation() {
   return (
@@ -17,62 +18,26 @@ export default function UsersPresentation() {
       </h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <Card className="flex-1">
-          <CardHeader>
-            <User size={48} />
-            <CardTitle>Paciente</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>Registre suas emoções, horários de medicação e mais. </p>
-          </CardContent>
-          <CardFooter>
-            <Link href="/login">
-              <Button className="bg-mBlue-600 text-lg hover:bg-mBlue-400 font-semibold">
-                Comece agora
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
+        <PresentUser
+          title="Paciente"
+          description="Registre suas emoções, horários de medicação e mais."
+          href="/login"
+          icon={User}
+        />
 
-        <Card className="flex-1">
-          <CardHeader>
-            <Cross size={48} />
-            <CardTitle>Terapeuta</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Acompanhe o progresso de seus pacientes e ajude-os a se manterem
-              saudáveis.
-            </p>
-          </CardContent>
-          <CardFooter>
-            <Link href="/login">
-              <Button className="bg-mBlue-600 text-lg hover:bg-mBlue-400 font-semibold">
-                Comece agora
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
+        <PresentUser
+          title="Terapeuta"
+          description="Acompanhe o progresso de seus pacientes e ajude-os a se manterem saudáveis."
+          href="/login"
+          icon={Cross}
+        />
 
-        <Card className="flex-1">
-          <CardHeader>
-            <Users size={48} />
-            <CardTitle>Familiar de Paciente</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Acompanhe o progresso de seus entes queridos e ajude-os a se
-              manterem saudáveis.
-            </p>
-          </CardContent>
-          <CardFooter>
-            <Link href="/login">
-              <Button className="bg-mBlue-600 text-lg hover:bg-mBlue-400 font-semibold">
-                Comece agora
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
+        <PresentUser
+          title="Familiar de Paciente"
+          description="Acompanhe o progresso de seus entes queridos e ajude-os a se manterem saudáveis."
+          href="/login"
+          icon={Users}
+        />
       </div>
     </section>
   );

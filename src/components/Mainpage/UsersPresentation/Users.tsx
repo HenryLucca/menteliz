@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,21 +7,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
+import { ElementType } from "react";
 
-interface UsersProps {}
+interface UsersProps {
+  title: string;
+  description: string;
+  href: string;
+  icon: ElementType;
+}
 
-export default function Users() {
+export default function PresentUser({
+  title,
+  description,
+  href,
+  icon: Icon,
+}: UsersProps) {
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        {/* <User size={48} /> */}
+        <Icon size={48} />
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        <p>{description}</p>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
+      <CardFooter className="">
+        <Link href="/login">
+          <Button variant={"outline"} className="">
+            Comece agora
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
