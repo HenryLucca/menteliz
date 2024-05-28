@@ -27,8 +27,12 @@ export default function Header() {
         <h2 className="font-bold text-2xl">Menteliz</h2>
       </a>
       <div className="flex gap-3">
-        <h4 className="font-semibold hover:underline">Sobre</h4>
-        <h4 className="font-semibold hover:underline">Contato</h4>
+        <h4 className="font-semibold decoration-secondaryCoral-600 hover:underline">
+          Sobre
+        </h4>
+        <h4 className="font-semibold decoration-secondaryCoral-600 hover:underline">
+          Contato
+        </h4>
         <div className="flex justify-end">
           <HeaderUser />
         </div>

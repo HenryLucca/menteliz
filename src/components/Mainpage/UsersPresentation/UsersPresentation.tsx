@@ -24,19 +24,17 @@ export default function UsersPresentation() {
           href="/login"
           icon={User}
         />
-
-        <PresentUser
-          title="Terapeuta"
-          description="Acompanhe o progresso de seus pacientes e ajude-os a se manterem saudáveis."
-          href="/login"
-          icon={Cross}
-        />
-
         <PresentUser
           title="Familiar de Paciente"
           description="Acompanhe o progresso de seus entes queridos e ajude-os a se manterem saudáveis."
           href="/login"
           icon={Users}
+        />
+        <PresentUser
+          title="Terapeuta"
+          description="Acompanhe o progresso de seus pacientes e ajude-os a se manterem saudáveis."
+          href="/login"
+          icon={Cross}
         />
       </div>
     </section>
