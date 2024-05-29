@@ -26,8 +26,7 @@ export default function PresentUser({
   return (
     <Card className="flex-1">
       <CardHeader>
-        {/* <User size={48} /> */}
-        <Icon size={48} />
+        <Icon size={48} className="text-secondaryCoral-600" />
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>

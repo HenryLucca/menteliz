@@ -12,7 +12,7 @@ import PresentUser from "./Users";
 
 export default function UsersPresentation() {
   return (
-    <section className="min-h-svh h-fit md:h-fit p-16 space-y-8">
+    <section className="min-h-svh md:min-h-fit p-16 md:py-32 space-y-8">
       <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl/none text-mBlue-600 font-bold font">
         Para todos os tipos de usuários
       </h1>
