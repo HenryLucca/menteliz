@@ -5,7 +5,7 @@ import EditProfile from "./EditProfile";
 export default function Perfil() {
   return (
     <>
-      <main>
+      <main className="py-3">
         <section className="grid place-items-center">
           <div>
             <UserIcon size={24} />

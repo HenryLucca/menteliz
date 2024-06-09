@@ -31,7 +31,7 @@ export default function PendentConnections() {
   }, [checkConnectionRequests, searchUserById]);
 
   return (
-    <section className="space-y-4">
+    <aside className="space-y-4">
       {requests ? (
         <div className="flex flex-col items-center justify-center">
           <h1>{requests.length} Conexões Pendentes</h1>
@@ -43,9 +43,9 @@ export default function PendentConnections() {
         </div>
       ) : (
         <div className="grid place-items-center">
-          <h1>Nenhuma conexão pendente</h1>
+          {/* <h1>Nenhuma conexão pendente</h1> */}
         </div>
       )}
-    </section>
+    </aside>
   );
 }

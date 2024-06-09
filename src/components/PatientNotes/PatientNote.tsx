@@ -20,9 +20,15 @@ const moods = {
 };
 
 const moodBgColors = {
-  good: "bg-green-300",
-  neutral: "bg-gray-300",
-  bad: "bg-red-300",
+  good: "bg-green-500",
+  neutral: "bg-gray-500",
+  bad: "bg-red-500",
+};
+
+const moodEmojis = {
+  good: "😄",
+  neutral: "😐",
+  bad: "😔",
 };
 
 export default function PatientNote(props: PatientNoteProps) {
@@ -32,12 +38,16 @@ export default function PatientNote(props: PatientNoteProps) {
   const mood = moods[note.mood];
 
   const moodColor = moodBgColors[note.mood];
+  const moodEmoji = moodEmojis[note.mood];
 
   return (
     <li>
-      <Card className={`${moodColor}`}>
+      <Card>
         <CardHeader className="p-1">
-          {/* <CardTitle className="text-xl">{mood}</CardTitle> */}
+          <div className="w-8 h-1 flex items-center translate-y-2">
+            <div className={`w-1/2 h-full ${moodColor}`}></div>
+            <span>{moodEmoji}</span>
+          </div>
           <CardDescription className="text-end">{date}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -45,10 +55,5 @@ export default function PatientNote(props: PatientNoteProps) {
         </CardContent>
       </Card>
     </li>
-    // <li>
-    //   <p>{props.note.content}</p>
-    //   <p>{props.note.mood}</p>
-    //   <p>{props.note.createdAt}</p>
-    // </li>
   );
 }

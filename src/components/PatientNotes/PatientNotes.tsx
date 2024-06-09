@@ -25,7 +25,7 @@ export default function PatientNotes(props: PatientNotesProps) {
 
   return (
     <section className="space-y-4">
-      <h1 className="text-lg font-medium tracking-tight">Notas do paciente</h1>
+      <h1 className="text-lg font-medium tracking-tight">Notas</h1>
 
       <ul className="flex flex-col gap-2">
         {notes.map((note, index) => (
